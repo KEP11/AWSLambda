@@ -27,7 +27,6 @@ public class Function
     {
         context.Logger.LogInformation($"Processed message {message.Body}");
         await WriteToS3Async(message.Body, context);
-        await Task.CompletedTask;
     }
     
     private async Task<bool> WriteToS3Async( string content, ILambdaContext context)
