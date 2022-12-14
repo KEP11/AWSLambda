@@ -34,7 +34,7 @@ jobs:
       run: dotnet build --no-restore
 
     - name: Publish
-      run: dotnet publish AWSLambda.csproj -c Release --self-contained true -r linux-x64 --no-restore
+      run: dotnet publish AWSLambda.csproj -c Release --self-contained true -r linux-x64
 
     - name: Create Zip File
       uses: papeloto/action-zip@v1
