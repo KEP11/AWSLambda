@@ -46,3 +46,6 @@ jobs:
 
     - name: Update lambda function code
       run: aws lambda update-function-code --function-name aws-task-lambda-kep --s3-bucket aws-task-bucket-lambdacode --s3-key ${{ github.run_id }}.zip
+      
+    - name: Update lambda function version
+      run: aws lambda publish-version --function-name aws-task-lambda-kep
