@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
+name: .NET lambda build
 
 on:
   push:
@@ -24,5 +24,22 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    
+    - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+     
+     - name: Build
+        run: make build
+
+     - name: ZIP build
+        run: zip ${{ github.run_id }}.zip lambda
+
+     - name: Upload to S3
+        run: aws s3 cp ${{ github.run_id }}.zip s3://aws-task-bucket-lambdacode/${{ github.run_id }}.zip
+
+     - name: Update lambda function code
+        run: aws lambda update-function-code --function-name aws-task-lambda-kep --s3-bucket aws-task-bucket-lambdacode --s3-key ${{ github.run_id }}.zip
