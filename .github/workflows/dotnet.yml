@@ -11,8 +11,8 @@ on:
 
 env:
   PROJECT_PATH: AWSLambda/AWSLambda.csproj
-  ZIP_PATH: AWSLambda/bin/Release/net6.0/AWSLambda.zip
-  DLL_PATH: AWSLambda/bin/Release/net6.0/publish/AWSLambda.dll 
+  ZIP_PATH: AWSLambda/bin/Release/net6.0/${{ github.run_id }}.zip
+  DLL_PATH: AWSLambda/bin/Release/net6.0/linux-x64/publish/AWSLambda.dll 
 
 jobs:
   build:
@@ -34,13 +34,13 @@ jobs:
       run: dotnet build --no-restore
 
     - name: Publish
-      run: dotnet publish  -c Release --self-contained true -r linux-x64 --no-restore
+      run: dotnet publish AWSLambda.csproj -c Release --self-contained true -r linux-x64 --no-restore
 
     - name: Create Zip File
       uses: papeloto/action-zip@v1
       with:
           files: ${{env.DLL_PATH }}
-          dest: ${{ github.run_id }}.zip
+          dest: ${{env.ZIP_PATH }}
 
     #- name: ZIP build
     #  run: zip -r ${{ github.run_id }}.zip . -i AWSLambda
