@@ -29,7 +29,7 @@ jobs:
       run: dotnet build -c Release --no-restore
 
     - name: ZIP build
-      run: zip -r ${{ github.run_id }}.zip . -x ".git/*" ".github/*" -include "net6.0/*.dll" "net6.0/*.json"
+      run: zip -r ${{ github.run_id }}.zip . -x ".git/*" ".github/*" --include "*.dll" "*.json"
       #--include **/AWSLambda/AWSLambda/bin/Release/**
       #run: zip -r ${{ github.event.repository.name }}.zip . --include **/AWSLambda/**
       
