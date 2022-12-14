@@ -36,7 +36,7 @@ jobs:
     #  run: make build
 
     - name: ZIP build
-      run: zip ${{ github.run_id }}.zip lambda
+      run: zip ${{ github.run_id }}.zip ${{ github.run_id }}
 
     - name: Upload to S3
       run: aws s3 cp ${{ github.run_id }}.zip s3://aws-task-bucket-lambdacode/${{ github.run_id }}.zip
