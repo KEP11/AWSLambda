@@ -16,15 +16,21 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
+        
     - name: Restore dependencies
       run: dotnet restore
+      
     - name: Build
       run: dotnet build --no-restore
-    
+
+    - name: ZIP build
+      run: zip -r ${{ github.run_id }}.zip AWSLambda
+      
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -32,12 +38,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
     
-    #- name: Build
-    #  run: make build
-
-    - name: ZIP build
-      run: zip ${{ github.run_id }}.zip ${{ github.run_id }}
-
     - name: Upload to S3
       run: aws s3 cp ${{ github.run_id }}.zip s3://aws-task-bucket-lambdacode/${{ github.run_id }}.zip
 
