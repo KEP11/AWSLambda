@@ -33,14 +33,14 @@ jobs:
     - name: Build
       run: dotnet build -c Release --no-restore
 
-    - name: Create Zip File
-      uses: papeloto/action-zip@v1
-      with:
-          files: ${{env.DLL_PATH }}
-          dest: ${{env.ZIP_PATH }}
+  #  - name: Create Zip File
+   #   uses: papeloto/action-zip@v1
+   #   with:
+    #      files: ${{env.DLL_PATH }}
+     #     dest: ${{env.ZIP_PATH }}
 
-    #- name: ZIP build
-    #  run: zip -r ${{ github.run_id }}.zip . -i AWSLambda
+    - name: ZIP build
+      run: zip -r ${{ github.run_id }}.zip . --include **/AWSLambda/**
       
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
