@@ -34,7 +34,7 @@ jobs:
       run: dotnet build --no-restore
 
     - name: Publish
-      run: dotnet publish  -c Release --self-contained -r win-x86 -p:PublishSingleFile=true --no-restore
+      run: dotnet publish  -c Release --self-contained true -r linux-x86 --no-restore
 
     - name: Create Zip File
       uses: papeloto/action-zip@v1
