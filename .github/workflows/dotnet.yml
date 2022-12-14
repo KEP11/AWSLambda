@@ -40,7 +40,9 @@ jobs:
      #     dest: ${{env.ZIP_PATH }}
 
     - name: ZIP build
-      run: zip -r ${{ github.run_id }}.zip . --include **/AWSLambda/**
+      run: zip -r ${{ github.run_id }}.zip . --include **/AWSLambda/AWSLambda/bin/Release/**
+      #run: zip -r ${{ github.event.repository.name }}.zip . --include **/AWSLambda/**
+      
       
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
