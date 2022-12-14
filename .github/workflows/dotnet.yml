@@ -9,11 +9,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  ZIP_PATH: /AWSLambda/bin/Release/net6.0/${{ github.run_id }}.zip
-  DLL_PATH: /AWSLambda/bin/Release/net6.0/AWSLambda.dll
-            #/home/runner/work/AWSLambda/AWSLambda/bin/Release/net6.0/AWSLambda.dll
-
 jobs:
   build:
 
@@ -33,14 +28,8 @@ jobs:
     - name: Build
       run: dotnet build -c Release --no-restore
 
-  #  - name: Create Zip File
-   #   uses: papeloto/action-zip@v1
-   #   with:
-    #      files: ${{env.DLL_PATH }}
-     #     dest: ${{env.ZIP_PATH }}
-
     - name: ZIP build
-      run: zip -r ${{ github.run_id }}.zip . 
+      run: zip -r ${{ github.run_id }}.zip . -x ".git/*" ".github/*" -include "net6.0/*.dll" "net6.0/*.json"
       #--include **/AWSLambda/AWSLambda/bin/Release/**
       #run: zip -r ${{ github.event.repository.name }}.zip . --include **/AWSLambda/**
       
