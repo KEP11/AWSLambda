@@ -32,8 +32,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
     
-    - name: Build
-      run: make build
+    #- name: Build
+    #  run: make build
 
     - name: ZIP build
       run: zip ${{ github.run_id }}.zip lambda
