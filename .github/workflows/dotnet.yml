@@ -10,9 +10,8 @@ on:
     branches: [ "main" ]
 
 env:
-  PROJECT_PATH: AWSLambda/AWSLambda.csproj
   ZIP_PATH: /home/runner/work/AWSLambda/AWSLambda/bin/Release/net6.0/${{ github.run_id }}.zip
-  DLL_PATH: /home/runner/work/AWSLambda/AWSLambda/bin/Release/net6.0/linux-x64/*.dll 
+  DLL_PATH: /home/runner/work/AWSLambda/AWSLambda/bin/Release/net6.0/linux-x64/AWSLambda.dll
 
 jobs:
   build:
@@ -39,7 +38,7 @@ jobs:
     - name: Create Zip File
       uses: papeloto/action-zip@v1
       with:
-          files: ${{env.DLL_PATH }} *.json
+          files: ${{env.DLL_PATH }}
           dest: ${{env.ZIP_PATH }}
 
     #- name: ZIP build
