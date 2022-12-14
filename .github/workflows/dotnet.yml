@@ -11,8 +11,8 @@ on:
 
 env:
   PROJECT_PATH: AWSLambda/AWSLambda.csproj
-  ZIP_PATH: AWSLambda/bin/Release/net6.0/${{ github.run_id }}.zip
-  DLL_PATH: AWSLambda/bin/Release/net6.0/linux-x64/publish/AWSLambda.dll 
+  ZIP_PATH: /home/runner/work/AWSLambda/AWSLambda/bin/Release/net6.0/${{ github.run_id }}.zip
+  DLL_PATH: /home/runner/work/AWSLambda/AWSLambda/bin/Release/net6.0/linux-x64/publish/AWSLambda.dll 
 
 jobs:
   build:
