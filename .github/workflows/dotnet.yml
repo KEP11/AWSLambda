@@ -10,8 +10,8 @@ on:
     branches: [ "main" ]
 
 env:
-  ZIP_PATH: /home/runner/work/AWSLambda/AWSLambda/bin/Release/net6.0/${{ github.run_id }}.zip
-  DLL_PATH: /home/runner/work/AWSLambda/AWSLambda/bin/Release/net6.0/AWSLambda.dll
+  ZIP_PATH: /AWSLambda/AWSLambda/bin/Release/net6.0/${{ github.run_id }}.zip
+  DLL_PATH: /AWSLambda/AWSLambda/bin/Release/net6.0/AWSLambda.dll
             #/home/runner/work/AWSLambda/AWSLambda/bin/Release/net6.0/AWSLambda.dll
 
 jobs:
@@ -32,9 +32,6 @@ jobs:
       
     - name: Build
       run: dotnet build -c Release --no-restore
-
-    #- name: Publish
-    #  run: dotnet publish AWSLambda.csproj -c Release --self-contained true -r linux-x64
 
     - name: Create Zip File
       uses: papeloto/action-zip@v1
