@@ -28,10 +28,24 @@ jobs:
     - name: Build
       run: dotnet build -c Release --no-restore
 
-    - name: ZIP build
-      run: zip -r ${{ github.run_id }}.zip . -x ".git/*" ".github/*" "obj/*" --include "bin/*.dll" "bin/*.json"
+    #- name: ZIP build
+     # run: zip -r ${{ github.run_id }}.zip . -x ".git/*" ".github/*" "obj/*" --include "bin/*.dll" "bin/*.json"
       #--include **/AWSLambda/AWSLambda/bin/Release/**
       #run: zip -r ${{ github.event.repository.name }}.zip . --include **/AWSLambda/**
+      
+    - name: AWS Lambda Deploy
+      uses: appleboy/lambda-action@v0.1.5
+      with:
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_region: us-east-1
+        function_name: aws-task-lambda-kep
+        zip_file: ${{ github.run_id }}.zip
+        memory_size: 128
+        timeout: 30
+        handler: AWSLambda::AWSLambda.Function::FunctionHandler
+        role: arn:aws:iam::042072295322:role/service-role/aws-task-lambda-kep-role-fq9dsxam
+        runtime: dotnet6
       
       
     - name: Configure AWS Credentials
