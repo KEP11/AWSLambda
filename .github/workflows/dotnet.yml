@@ -47,7 +47,7 @@ jobs:
       run: dotnet lambda deploy-function aws-task-lambda-kep
 
     - name: Upload to S3
-      run: aws s3 cp AWSLambda.zip s3://aws-task-bucket-lambdacode/AWSLambda.zip
+      run: aws s3 cp /home/runner/work/AWSLambda/AWSLambda/bin/Release/net6.0/AWSLambda.zip s3://aws-task-bucket-lambdacode/AWSLambda.zip
 
     - name: Update lambda function code
       run: aws lambda update-function-code --function-name aws-task-lambda-kep --s3-bucket aws-task-bucket-lambdacode --s3-key AWSLambda.zip
