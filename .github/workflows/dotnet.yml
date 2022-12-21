@@ -33,21 +33,6 @@ jobs:
       #--include **/AWSLambda/AWSLambda/bin/Release/**
       #run: zip -r ${{ github.event.repository.name }}.zip . --include **/AWSLambda/**
       
-    - name: AWS Lambda Deploy
-      uses: appleboy/lambda-action@v0.1.5
-      with:
-        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws_region: us-east-1
-        function_name: aws-task-lambda-kep
-        zip_file: ${{ github.run_id }}.zip
-        memory_size: 128
-        timeout: 30
-        handler: AWSLambda::AWSLambda.Function::FunctionHandler
-        role: arn:aws:iam::042072295322:role/service-role/aws-task-lambda-kep-role-fq9dsxam
-        runtime: dotnet6
-      
-      
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -55,6 +40,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
     
+    - name: AWS Lambda Deploy
+      run: dotnet lambda deploy-function aws-task-lambda-kep
+
     - name: Upload to S3
       run: aws s3 cp ${{ github.run_id }}.zip s3://aws-task-bucket-lambdacode/${{ github.run_id }}.zip
 
