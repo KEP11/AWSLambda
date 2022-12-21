@@ -28,11 +28,6 @@ jobs:
     - name: Build
       run: dotnet build -c Release --no-restore
 
-    #- name: ZIP build
-     # run: zip -r ${{ github.run_id }}.zip . -x ".git/*" ".github/*" "obj/*" --include "bin/*.dll" "bin/*.json"
-      #--include **/AWSLambda/AWSLambda/bin/Release/**
-      #run: zip -r ${{ github.event.repository.name }}.zip . --include **/AWSLambda/**
-      
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -49,8 +44,9 @@ jobs:
     - name: Upload to S3
       run: aws s3 cp /home/runner/work/AWSLambda/AWSLambda/bin/Release/net6.0/AWSLambda.zip s3://aws-task-bucket-lambdacode/AWSLambda.zip
 
-    - name: Update lambda function code
-      run: aws lambda update-function-code --function-name aws-task-lambda-kep --s3-bucket aws-task-bucket-lambdacode --s3-key AWSLambda.zip
-      
     - name: Update lambda function version
       run: aws lambda publish-version --function-name aws-task-lambda-kep
+      
+    - name: Update lambda function code
+      run: aws lambda update-function-code --function-name aws-task-lambda-kep --s3-bucket aws-task-bucket-lambdacode --s3-key AWSLambda.zip
+    
